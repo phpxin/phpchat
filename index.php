@@ -143,29 +143,48 @@ $id = $_SESSION['id'] ;
         data = $.parseJSON(data) ;
         var uid = '<?=$id?>' ;
 
-        var _c = 'left' ;
+        var html = '' ;
 
         if (data.id == uid){
-            _c = 'right' ;
+            html = '\
+                <li class="right clearfix">\
+                <span class="chat-img pull-right">\
+                <img src="./imgs/1.jpg" alt="User Avatar" class="img-circle img-avatar">\
+                </span>\
+                <div class="chat-body clearfix">\
+                <div class="header">\
+                <small class=" text-muted">\
+                <i class="fa fa-clock-o fa-fw"></i> '+data.date+'</small>\
+                <strong class="pull-right primary-font">'+data.nickname+'</strong>\
+                </div>\
+                <p>\
+                '+data.content+'\
+                </p>\
+                </div>\
+                </li>\
+            ' ;
+        }else{
+            html = '\
+                <li class="left clearfix">\
+                <span class="chat-img pull-left">\
+                <img src="./imgs/1.jpg" alt="User Avatar" class="img-circle img-avatar" />\
+                </span>\
+                <div class="chat-body clearfix">\
+                <div class="header">\
+                <strong class="primary-font">'+data.nickname+'</strong>\
+                <small class="pull-right text-muted">\
+                <i class="fa fa-clock-o fa-fw"></i> '+data.date+'\
+                </small>\
+                </div>\
+                <p>\
+                '+data.content+'\
+                </p>\
+                </div>\
+                </li>\
+            ';
         }
 
-        var html = '\
-            <li class="'+_c+' clearfix">\
-            <span class="chat-img pull-right">\
-            <img src="./imgs/1.jpg" alt="User Avatar" class="img-circle img-avatar">\
-            </span>\
-            <div class="chat-body clearfix">\
-            <div class="header">\
-            <small class=" text-muted">\
-            <i class="fa fa-clock-o fa-fw"></i> '+data.date+'</small>\
-            <strong class="pull-right primary-font">'+data.nickname+'</strong>\
-            </div>\
-            <p>\
-            '+data.content+'\
-            </p>\
-            </div>\
-            </li>\
-        ' ;
+
 
         $('#chat').append(html) ;
         $('#chat-body').scrollTop(parseInt($('#chat').height()));
@@ -190,6 +209,8 @@ $id = $_SESSION['id'] ;
                     showErrMsg('消息不能为空');
                     return ;
                 }
+
+                $('#btn-input').val('');
 
                 var msg_json = {} ;
                 msg_json.nickname = '<?=$nickname?>' ;
